@@ -1,34 +1,53 @@
-PolyForm Noncommercial License 1.0.0
+FACED LICENSE
 
-Copyright (c) 2026 h9zdev (H9)
-Project: FACED — Face Recognition & Identity Intelligence Platform
+Faced (c) 2026 h9zdev
 
-https://polyformproject.org/licenses/noncommercial/1.0.0
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
 
-1. Purpose & Grant of Rights
-The Licensor grants you a copyright license to the software to do everything you might do with the software that would otherwise infringe the Licensor's copyright in it, for any Noncommercial Purpose.
+To view a copy of this license, visit:
+https://creativecommons.org/licenses/by-nc/4.0/
 
-2. Notices
-You must ensure that everyone who gets a copy of any part of this software from you, with or without changes, also gets the text of this license or a link to https://polyformproject.org/licenses/noncommercial/1.0.0, along with the copyright notice above.
+or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-3. Commercial Use Prohibition
-You may not use, copy, modify, distribute, or incorporate this software, in whole or in part, for any commercial purpose, including but not limited to:
-- Incorporating into a commercial product, platform, appliance, or service.
-- Running as a paid Software-as-a-Service (SaaS), API service, or biometric tracking solution.
-- Using in internal revenue-generating commercial operations or enterprise surveillance for profit.
-- Selling, sublicensing, or distributing the software for monetary consideration.
 
-Commercial licensing inquiries: singularat@protn.me
+NO COMMERCIAL USE
 
-4. Definition of Noncommercial Purpose
-A Noncommercial Purpose is any purpose not primarily intended for or directed towards commercial advantage or monetary compensation, including:
-- Personal experimentation, self-hosting, and hobbyist projects.
-- Academic, scientific, and educational research.
-- Non-profit evaluation, security auditing, and forensic study.
-- Contribution to and validation of open non-commercial software tooling.
+Faced is for non-commercial use only. You may not use Faced, in whole or in part, for commercial purposes. This includes, without limitation:
 
-5. Fair Use & Privacy Compliance
-You agree to comply with all applicable local, national, and international laws, regulations, and biometric privacy ordinances (such as GDPR, CCPA, BIPA) when deploying or testing this software. The Licensor does not authorize the use of this software for unlawful surveillance, harassment, or violation of individual rights.
+  - Selling, licensing, or sublicensing Faced or any derivative of it.
+  - Including Faced in a paid product, service, or subscription.
+  - Offering Faced or its features as a hosted, SaaS, or API service for a fee.
+  - Using Faced to provide paid consulting, investigations, or identity services.
+  - Using Faced for any activity primarily intended for commercial advantage or monetary compensation.
 
-6. No Warranty
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Commercial use requires prior written permission from the copyright holder. To request it, contact the maintainer through https://github.com/h9zdev
+
+
+YOU ARE FREE TO
+
+  - Share: copy and redistribute the material in any medium or format.
+  - Adapt: remix, transform, and build upon the material.
+
+...for non-commercial purposes only.
+
+
+UNDER THE FOLLOWING TERMS
+
+  - Attribution: You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+  - NonCommercial: You may not use the material for commercial purposes.
+  - No additional restrictions: You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+
+NOTICES
+
+You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation.
+
+No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
+
+This summary is not a substitute for the license. The full legal code is available at:
+https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+
+RESPONSIBLE USE
+
+Separately from this license, use of Faced is subject to the project's Code of Conduct (CODE_OF_CONDUCT.md), including its requirements on lawful, consensual, and responsible use of biometric technology.
