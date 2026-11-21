@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+app.log
+
+# Rust build target
+rust_engine/target/
+
+# SQLite WAL and temporary files
+*.db-wal
+*.db-shm
+*.db-journal
+
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

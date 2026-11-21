@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FACED // Face Recognition &amp; Identity Intelligence</title>
+    <link rel="icon" href="https://haybnz.web.app/logo.png" type="image/x-icon">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/tactical-index.css">
+
+    <style>
+        :root {
+            --primary: #00FFD1;
+            --primary-glow: rgba(0, 255, 209, 0.4);
+            --primary-dim: rgba(0, 255, 209, 0.12);
+            --bg-deep: #05080C;
+            --bg-surface: #0A0E14;
+            --bg-card: #0D1219;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-cyan: rgba(0, 255, 209, 0.3);
+            --text-main: #E6F8F6;
+            --text-muted: #8AA4A8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ── 1. TOP HEADER NAVBAR ── */
+        .faced-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: rgba(10, 14, 20, 0.95);
+            border-bottom: 1px solid var(--border-cyan);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .faced-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .faced-logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 6px;
+            background: rgba(0, 255, 209, 0.1);
+            border: 1px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 20px;
+            box-shadow: 0 0 16px rgba(0, 255, 209, 0.3);
+        }
+
+        .faced-brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .faced-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: 1.5px;
+        }
+
+        .faced-title span {
+            color: var(--primary);
+        }
+
+        .faced-sub {
+            font-size: 9px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .faced-engine-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 255, 209, 0.08);
+            border: 1px solid rgba(0, 255, 209, 0.3);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .status-pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: #00FF88;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00FF88;
+            animation: pulse-dot 1.8s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        .faced-nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .faced-tabs {
+            display: flex;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px;
+            border-radius: 6px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .faced-tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 6px 14px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .faced-tab-btn:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faced-tab-btn.active {
+            background: var(--primary-dim);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 12px rgba(0, 255, 209, 0.2);
+        }
+
+        .faced-btn-primary {
+            background: var(--primary-dim);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 7px 16px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .faced-btn-primary:hover {
+            background: var(--primary);
+            color: #05080C;
+            box-shadow: 0 0 18px var(--primary);
+        }
+
+        /* ── 2. MAIN WORKSPACE ── */
+        .faced-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: calc(100vh - 120px);
+        }
+
+        /* ── 3. CENTERED HERO UPLOAD DROPZONE ── */
+        #face-center-hero-upload {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            width: 100%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .hero-scanner-frame {
+            position: relative;
+            width: min(780px, 94vw);
+            background: rgba(10, 14, 20, 0.85);
+            border: 1px dashed rgba(0, 255, 209, 0.35);
+            border-radius: 12px;
+            padding: 50px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-scanner-frame:hover {
+            border-color: var(--primary);
+            background: rgba(0, 255, 209, 0.03);
+            box-shadow: 0 0 35px rgba(0, 255, 209, 0.25), 0 16px 40px rgba(0, 0, 0, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* Corner Brackets */
+        .bracket {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-color: var(--primary);
+            border-style: solid;
+            pointer-events: none;
+        }
+        .bracket.top-left { top: -1px; left: -1px; border-width: 3px 0 0 3px; border-top-left-radius: 4px; }
+        .bracket.top-right { top: -1px; right: -1px; border-width: 3px 3px 0 0; border-top-right-radius: 4px; }
+        .bracket.bottom-left { bottom: -1px; left: -1px; border-width: 0 0 3px 3px; border-bottom-left-radius: 4px; }
+        .bracket.bottom-right { bottom: -1px; right: -1px; border-width: 0 3px 3px 0; border-bottom-right-radius: 4px; }
+
+        .scanner-aperture-ring {
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 255, 209, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 36px;
+            position: relative;
+            background: rgba(0, 255, 209, 0.05);
+            box-shadow: 0 0 24px rgba(0, 255, 209, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-scanner-frame:hover .scanner-aperture-ring {
+            transform: scale(1.08);
+            border-color: var(--primary);
+            box-shadow: 0 0 32px rgba(0, 255, 209, 0.4);
+        }
+
+        .hero-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .hero-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0 auto 26px;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 26px;
+        }
+
+        .hero-btn-primary {
+            background: var(--primary-dim);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 24px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .hero-btn-primary:hover {
+            background: var(--primary);
+            color: #05080C;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .hero-btn-secondary {
+            background: rgba(124, 147, 255, 0.15);
+            border: 1px solid #7C93FF;
+            color: #7C93FF;
+            padding: 10px 24px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .hero-btn-secondary:hover {
+            background: #7C93FF;
+            color: #05080C;
+            box-shadow: 0 0 20px #7C93FF;
+        }
+
+        .hero-specs-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .spec-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hero-pipeline-ribbon {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            width: min(780px, 94vw);
+            margin-top: 24px;
+        }
+
+        .pipe-col {
+            background: rgba(10, 14, 20, 0.6);
+            border: 1px solid var(--border-subtle);
+            padding: 10px 14px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .pipe-label {
+            font-size: 9px;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .pipe-val {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* ── 4. RESULTS WORKSPACE ── */
+        #face-scan-results-workspace {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            padding: 16px 24px;
+            gap: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .results-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: rgba(10, 14, 20, 0.9);
+            border: 1px solid var(--border-subtle);
+            border-left: 3px solid var(--primary);
+            padding: 12px 18px;
+            border-radius: 6px;
+        }
+
+        .results-status-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .results-actions-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-rescan {
+            background: rgba(0, 255, 209, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 14px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-rescan:hover {
+            background: var(--primary);
+            color: #05080C;
+        }
+
+        .btn-action-tool {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: #FFFFFF;
+            padding: 6px 12px;
+            font-family: inherit;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-action-tool:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .results-split-grid {
+            display: grid;
+            grid-template-columns: minmax(360px, 440px) 1fr;
+            gap: 18px;
+            flex: 1;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .results-split-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .results-left-col, .results-right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .results-card {
+            background: rgba(10, 14, 20, 0.85);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        /* ── 5. FOOTER ── */
+        .faced-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
+            background: rgba(6, 9, 14, 0.98);
+            border-top: 1px solid var(--border-subtle);
+            font-size: 11px;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: auto;
+            z-index: 100;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .footer-sep {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-center {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-chip {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            color: #C8E7EB;
+        }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MODALS (DOSSIER, EDIT, MERGE) -->
+<!-- FACE PROFILE DETAIL DOSSIER MODAL -->
+            <div id="face-detail-modal" style="display:none; position:fixed; z-index:100030; inset:0; background:rgba(0,0,0,0.88); backdrop-filter:blur(5px); align-items:center; justify-content:center; overflow-y:auto; padding:20px 0;">
+                <div style="background:#0D1117; border:1px solid #00FFD1; border-radius:8px; width:min(680px, 95vw); max-height:92vh; overflow-y:auto; padding:22px; font-family:'Share Tech Mono', monospace; box-shadow:0 12px 50px rgba(0,0,0,0.95), 0 0 25px rgba(0,255,209,0.25);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(0,255,209,0.3); padding-bottom:10px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="background:rgba(0,255,209,0.18); color:#00FFD1; border:1px solid #00FFD1; padding:2px 7px; border-radius:3px; font-size:10px; font-weight:bold;">ID #<span id="face-detail-id"></span></span>
+                            <span style="color:#00FFD1; font-size:14px; font-weight:bold;"><i class="fas fa-id-card-alt" style="margin-right:6px;"></i>PERSON PROFILE DOSSIER</span>
+                        </div>
+                        <i class="fas fa-times" onclick="closeFaceDetailModal()" style="color:#aaa; cursor:pointer; font-size:15px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'"></i>
+                    </div>
+
+                    <!-- Dossier Body: Photo on left, Details on right -->
+                    <div style="display:grid; grid-template-columns:140px 1fr; gap:16px; margin-bottom:14px;">
+                        <div>
+                            <img id="face-detail-avatar" src="" alt="Profile Photo" style="width:140px; height:140px; object-fit:cover; border-radius:6px; border:2px solid #00FFD1; background:#000; box-shadow:0 0 15px rgba(0,255,209,0.3);">
+                            <div id="face-detail-photo-count-badge" style="margin-top:6px; text-align:center; background:rgba(0,255,209,0.1); border:1px solid rgba(0,255,209,0.3); color:#00FFD1; padding:2px 4px; border-radius:3px; font-size:9.5px;">1 Registered Photo</div>
+                            <!-- Gallery thumbnails -->
+                            <div id="face-detail-gallery" style="display:flex; gap:4px; flex-wrap:wrap; margin-top:8px; max-height:90px; overflow-y:auto;"></div>
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; gap:8px;">
+                            <div>
+                                <div style="font-size:10px; color:rgba(255,255,255,0.45); text-transform:uppercase;">FULL IDENTITY NAME</div>
+                                <div id="face-detail-name" style="font-size:17px; font-weight:bold; color:#fff; word-break:break-word;"></div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:6px 8px; border-radius:4px;">
+                                    <div style="font-size:9px; color:#FFD166;"><i class="fas fa-birthday-cake" style="margin-right:4px;"></i>DATE OF BIRTH (DOB)</div>
+                                    <div id="face-detail-dob" style="font-size:11px; color:#FFD166; font-weight:bold; margin-top:2px;">Not Recorded</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:6px 8px; border-radius:4px;">
+                                    <div style="font-size:9px; color:#7C93FF;"><i class="fas fa-id-badge" style="margin-right:4px;"></i>ID / DOC NUMBER</div>
+                                    <div id="face-detail-idnum" style="font-size:11px; color:#7C93FF; font-weight:bold; margin-top:2px;">Not Recorded</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:6px 8px; border-radius:4px;">
+                                    <div style="font-size:9px; color:#FF6B6B;"><i class="fas fa-tint" style="margin-right:4px;"></i>BLOOD GROUP</div>
+                                    <div id="face-detail-blood" style="font-size:11px; color:#FF6B6B; font-weight:bold; margin-top:2px;">Not Recorded</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:6px 8px; border-radius:4px;">
+                                    <div style="font-size:9px; color:#00FFD1;"><i class="fas fa-passport" style="margin-right:4px;"></i>DOCUMENT TYPE</div>
+                                    <div id="face-detail-doctype" style="font-size:11px; color:#00FFD1; font-weight:bold; margin-top:2px;">Identity Card</div>
+                                </div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:6px 8px; border-radius:4px;">
+                                    <div style="font-size:9px; color:#00FFD1;"><i class="fas fa-envelope" style="margin-right:4px;"></i>EMAIL</div>
+                                    <div id="face-detail-email" style="font-size:11px; color:#fff; word-break:break-all; margin-top:2px;">Not Recorded</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:6px 8px; border-radius:4px;">
+                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                        <div style="font-size:9px; color:#FFD166;"><i class="fas fa-phone" style="margin-right:4px;"></i>PHONE NUMBER</div>
+                                        <button type="button" id="face-detail-phone-uplink-btn" onclick="launchPhoneIntelligenceFromDetail()" style="display:none; background:rgba(0,255,209,0.15); border:1px solid #00FFD1; color:#00FFD1; font-size:8.5px; padding:1px 5px; border-radius:2px; cursor:pointer; font-family:inherit;"><i class="fas fa-satellite-dish"></i> UPLINK</button>
+                                    </div>
+                                    <div id="face-detail-phone" style="font-size:11px; color:#fff; margin-top:2px;">Not Recorded</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address & Kin Details -->
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:8px 10px; border-radius:4px;">
+                            <div style="font-size:9px; color:rgba(255,255,255,0.45);"><i class="fas fa-map-marker-alt" style="color:#00FFD1; margin-right:4px;"></i>ADDRESS / RESIDENCE</div>
+                            <div id="face-detail-addr" style="font-size:11px; color:#fff; margin-top:2px;">Not Recorded</div>
+                        </div>
+
+                        <div style="background:rgba(124,147,255,0.06); border:1px solid rgba(124,147,255,0.25); padding:8px 10px; border-radius:4px;">
+                            <div style="font-size:9.5px; color:#7C93FF; font-weight:bold;"><i class="fas fa-user-friends" style="margin-right:5px;"></i>RELATIVE / KIN DETAILS</div>
+                            <div id="face-detail-relative" style="font-size:11px; color:#fff; margin-top:3px;">No relative recorded.</div>
+                        </div>
+
+                        <!-- Dynamic Custom Attributes -->
+                        <div style="background:rgba(0,255,209,0.04); border:1px solid rgba(0,255,209,0.2); padding:8px 10px; border-radius:4px;">
+                            <div style="font-size:9.5px; color:#00FFD1; font-weight:bold;"><i class="fas fa-tags" style="margin-right:5px;"></i>DYNAMIC CUSTOM FIELDS</div>
+                            <div id="face-detail-custom-fields" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;">None</div>
+                        </div>
+
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:8px 10px; border-radius:4px;">
+                            <div style="font-size:9px; color:rgba(255,255,255,0.45);"><i class="fas fa-sticky-note" style="margin-right:4px;"></i>NOTES & TAGS</div>
+                            <div id="face-detail-notes" style="font-size:11px; color:#fff; margin-top:2px;">No notes.</div>
+                        </div>
+
+                        <!-- System Technical Details -->
+                        <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.08); padding:8px 10px; border-radius:4px; font-size:9px; color:rgba(255,255,255,0.5); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                            <div><i class="fas fa-fingerprint" style="color:#7C93FF; margin-right:3px;"></i>FAISS Vector: <span id="face-detail-vector" style="color:#fff; font-family:monospace;">SFACE-128D</span></div>
+                            <div id="face-detail-exif"><i class="fas fa-camera" style="margin-right:3px;"></i>Camera: None</div>
+                            <div><i class="fas fa-clock" style="margin-right:3px;"></i>Enrolled: <span id="face-detail-created" style="color:#fff;"></span></div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Action Buttons -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:12px;">
+                        <button type="button" id="face-detail-btn-delete" style="background:rgba(255,80,80,0.12); border:1px solid rgba(255,80,80,0.3); color:#FF5555; padding:6px 14px; border-radius:4px; cursor:pointer; font-family:inherit; font-size:11px;">
+                            <i class="fas fa-trash" style="margin-right:4px;"></i>DELETE
+                        </button>
+                        <div style="display:flex; gap:8px;">
+                            <button type="button" id="face-detail-btn-merge" style="background:rgba(124,147,255,0.15); border:1px solid #7C93FF; color:#7C93FF; padding:6px 14px; border-radius:4px; cursor:pointer; font-family:inherit; font-size:11px;">
+                                <i class="fas fa-code-branch" style="margin-right:4px;"></i>MERGE
+                            </button>
+                            <button type="button" id="face-detail-btn-edit" style="background:rgba(0,255,209,0.18); border:1px solid #00FFD1; color:#00FFD1; padding:6px 16px; border-radius:4px; cursor:pointer; font-family:inherit; font-size:11px; font-weight:bold;">
+                                <i class="fas fa-edit" style="margin-right:4px;"></i>EDIT PROFILE
+                            </button>
+                            <button type="button" onclick="closeFaceDetailModal()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#ccc; padding:6px 14px; border-radius:4px; cursor:pointer; font-family:inherit; font-size:11px;">
+                                CLOSE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EDIT FACE PROFILE MODAL -->
+            <div id="face-edit-modal" style="display:none; position:fixed; z-index:100030; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(4px); align-items:center; justify-content:center; overflow-y:auto; padding:20px 0;">
+                <div style="background:#0D1117; border:1px solid #00FFD1; border-radius:8px; width:min(580px, 94vw); max-height:90vh; overflow-y:auto; padding:20px; font-family:'Share Tech Mono', monospace; box-shadow:0 12px 40px rgba(0,0,0,0.9), 0 0 20px rgba(0,255,209,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
+                        <span style="color:#00FFD1; font-size:13px; font-weight:bold;"><i class="fas fa-edit" style="margin-right:6px;"></i>EDIT PROFILE: <span id="face-edit-title-name"></span></span>
+                        <i class="fas fa-times" onclick="closeFaceEditModal()" style="color:#aaa; cursor:pointer; font-size:14px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'"></i>
+                    </div>
+                    <input type="hidden" id="face-edit-id">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:11px;">
+                        <div style="grid-column:1 / -1;">
+                            <label style="color:#00FFD1; font-size:10px; display:block; margin-bottom:2px;">FULL NAME *</label>
+                            <input type="text" id="face-edit-name" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:6px 8px; font-family:inherit; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="color:#FFD166; font-size:10px; display:block; margin-bottom:2px;">DATE OF BIRTH (DOB)</label>
+                            <input type="text" id="face-edit-dob" placeholder="YYYY-MM-DD" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#FFD166; padding:6px 8px; font-family:inherit; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="color:#7C93FF; font-size:10px; display:block; margin-bottom:2px;">ID / DOC NUMBER</label>
+                            <input type="text" id="face-edit-idnum" placeholder="License / ID #" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#7C93FF; padding:6px 8px; font-family:inherit; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="color:#FF6B6B; font-size:10px; display:block; margin-bottom:2px;">🩸 BLOOD GROUP</label>
+                            <input type="text" id="face-edit-blood" list="blood-group-list" placeholder="A+, B+, O+, AB+, etc." style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,107,107,0.3); color:#FF6B6B; padding:6px 8px; font-family:inherit; border-radius:4px;">
+                            <datalist id="blood-group-list">
+                                <option value="A+"></option>
+                                <option value="A-"></option>
+                                <option value="B+"></option>
+                                <option value="B-"></option>
+                                <option value="AB+"></option>
+                                <option value="AB-"></option>
+                                <option value="O+"></option>
+                                <option value="O-"></option>
+                                <option value="Rh Null"></option>
+                            </datalist>
+                        </div>
+                        <div>
+                            <label style="color:#00FFD1; font-size:10px; display:block; margin-bottom:2px;">DOCUMENT TYPE</label>
+                            <input type="text" id="face-edit-doctype" placeholder="Passport / Driver License" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:6px 8px; font-family:inherit; border-radius:4px;">
+                        </div>
+                        <div>
+                            <label style="color:#00FFD1; font-size:10px; display:block; margin-bottom:2px;">📧 EMAIL</label>
+                            <input type="email" id="face-edit-email" placeholder="name@domain.com" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:6px 8px; font-family:inherit; border-radius:4px;">
+                        </div>
+                        <div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                                <label style="color:#FFD166; font-size:10px; margin-bottom:0;">📞 PHONE NUMBER</label>
+                                <button type="button" onclick="launchPhoneIntelligenceFromEdit()" style="background:rgba(0,255,209,0.15); border:1px solid #00FFD1; color:#00FFD1; font-size:8.5px; padding:1px 5px; border-radius:2px; cursor:pointer; font-family:inherit;"><i class="fas fa-satellite-dish"></i> UPLINK</button>
+                            </div>
+                            <input type="text" id="face-edit-phone" placeholder="+1 (555) 000-0000" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:6px 8px; font-family:inherit; border-radius:4px;">
+                        </div>
+
+                        <!-- Relative Information -->
+                        <div style="grid-column:1 / -1; background:rgba(124,147,255,0.06); border:1px solid rgba(124,147,255,0.2); border-radius:4px; padding:8px 10px; margin-top:2px;">
+                            <div style="color:#7C93FF; font-size:10px; font-weight:bold; margin-bottom:6px;"><i class="fas fa-users" style="margin-right:4px;"></i>RELATIVE / KIN DETAILS</div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                                <div>
+                                    <label style="color:#bbb; font-size:9px; display:block; margin-bottom:2px;">RELATIVE NAME</label>
+                                    <input type="text" id="face-edit-relative-name" placeholder="Full name of relative" style="width:100%; box-sizing:border-box; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:5px 7px; font-family:inherit; border-radius:3px;">
+                                </div>
+                                <div>
+                                    <label style="color:#bbb; font-size:9px; display:block; margin-bottom:2px;">RELATIONSHIP</label>
+                                    <select id="face-edit-relative-relation" onchange="toggleEditRelativeOtherExplain()" style="width:100%; box-sizing:border-box; background:rgba(0,0,0,0.6); border:1px solid #7C93FF; color:#fff; padding:5px 7px; font-family:inherit; border-radius:3px;">
+                                        <option value="">-- Select Relationship --</option>
+                                        <option value="Father">Father</option>
+                                        <option value="Mother">Mother</option>
+                                        <option value="Brother">Brother</option>
+                                        <option value="Sister">Sister</option>
+                                        <option value="Spouse">Spouse</option>
+                                        <option value="Son">Son</option>
+                                        <option value="Daughter">Daughter</option>
+                                        <option value="Cousin">Cousin</option>
+                                        <option value="Guardian">Guardian</option>
+                                        <option value="Other">Other (Explain)</option>
+                                    </select>
+                                </div>
+                                <div id="face-edit-relative-other-wrap" style="grid-column:1 / -1; display:none;">
+                                    <label style="color:#FFD166; font-size:9px; display:block; margin-bottom:2px;">OTHER RELATION EXPLANATION</label>
+                                    <input type="text" id="face-edit-relative-other" placeholder="Explain relationship (e.g. Uncle, Aunt, Grandparent, Caregiver)" style="width:100%; box-sizing:border-box; background:rgba(0,0,0,0.4); border:1px solid #FFD166; color:#FFD166; padding:5px 7px; font-family:inherit; border-radius:3px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Custom Fields Container -->
+                        <div style="grid-column:1 / -1; background:rgba(0,255,209,0.03); border:1px solid rgba(0,255,209,0.18); border-radius:4px; padding:8px 10px; margin-top:2px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <span style="color:#00FFD1; font-size:10px; font-weight:bold;"><i class="fas fa-tags" style="margin-right:4px;"></i>DYNAMIC CUSTOM ATTRIBUTES (Arbitrary Fields)</span>
+                                <button type="button" onclick="addEditModalCustomFieldRow('', '')" style="background:rgba(0,255,209,0.15); border:1px solid #00FFD1; color:#00FFD1; padding:2px 8px; border-radius:3px; cursor:pointer; font-family:inherit; font-size:9px; font-weight:bold;">
+                                    <i class="fas fa-plus"></i> + ADD FIELD
+                                </button>
+                            </div>
+                            <div id="face-edit-custom-fields-container" style="display:flex; flex-direction:column; gap:6px;">
+                                <!-- Dynamic rows injected here -->
+                            </div>
+                        </div>
+
+                        <div style="grid-column:1 / -1;">
+                            <label style="color:#aaa; font-size:10px; display:block; margin-bottom:2px;">ADDRESS</label>
+                            <input type="text" id="face-edit-addr" placeholder="Full address" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:6px 8px; font-family:inherit; border-radius:4px;">
+                        </div>
+                        <div style="grid-column:1 / -1;">
+                            <label style="color:#aaa; font-size:10px; display:block; margin-bottom:2px;">NOTES / TAGS</label>
+                            <textarea id="face-edit-notes" rows="2" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:6px 8px; font-family:inherit; border-radius:4px;"></textarea>
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px;">
+                        <button type="button" onclick="closeFaceEditModal()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#ccc; padding:6px 14px; border-radius:4px; cursor:pointer; font-family:inherit; font-size:11px;">CANCEL</button>
+                        <button type="button" id="btn-save-face-edit" onclick="submitFaceProfileEdit()" style="background:rgba(0,255,209,0.2); border:1px solid #00FFD1; color:#00FFD1; padding:6px 18px; border-radius:4px; cursor:pointer; font-family:inherit; font-size:11px; font-weight:bold;">💾 SAVE CHANGES</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MERGE FACE PROFILES MODAL -->
+            <div id="face-merge-modal" style="display:none; position:fixed; z-index:100030; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(4px); align-items:center; justify-content:center;">
+                <div style="background:#0D1117; border:1px solid #7C93FF; border-radius:8px; width:min(560px, 92vw); padding:20px; font-family:'Share Tech Mono', monospace; box-shadow:0 12px 40px rgba(0,0,0,0.9), 0 0 20px rgba(124,147,255,0.25);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
+                        <span style="color:#7C93FF; font-size:13px; font-weight:bold;"><i class="fas fa-code-branch" style="margin-right:6px;"></i>MERGE DUPLICATE FACE PROFILES</span>
+                        <i class="fas fa-times" onclick="closeFaceMergeModal()" style="color:#aaa; cursor:pointer; font-size:14px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'"></i>
+                    </div>
+                    <div style="font-size:11px; color:rgba(255,255,255,0.7); line-height:1.45; margin-bottom:14px;">
+                        Merge two profiles of the same person. All photo vectors from the <b>Source</b> profile will be moved into the <b>Target</b> profile, missing metadata will be combined, and the duplicate source profile will be deleted.
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+                        <div>
+                            <label style="color:#FF7777; font-size:10px; font-weight:bold; display:block; margin-bottom:4px;">1. SOURCE (Will be merged & removed):</label>
+                            <select id="face-merge-source-select" onchange="updateMergePreviews()" style="width:100%; box-sizing:border-box; background:rgba(0,0,0,0.6); border:1px solid #FF7777; color:#fff; padding:6px; font-family:inherit; font-size:11px; border-radius:4px;"></select>
+                            <div id="face-merge-source-preview" style="margin-top:6px; padding:6px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:4px; font-size:10px; min-height:45px;"></div>
+                        </div>
+                        <div>
+                            <label style="color:#00FFD1; font-weight:bold; font-size:10px; display:block; margin-bottom:4px;">2. TARGET (Receives all photos):</label>
+                            <select id="face-merge-target-select" onchange="updateMergePreviews()" style="width:100%; box-sizing:border-box; background:rgba(0,0,0,0.6); border:1px solid #00FFD1; color:#fff; padding:6px; font-family:inherit; font-size:11px; border-radius:4px;"></select>
+                            <div id="face-merge-target-preview" style="margin-top:6px; padding:6px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:4px; font-size:10px; min-height:45px;"></div>
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:8px;">
+                        <button type="button" onclick="closeFaceMergeModal()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#ccc; padding:6px 14px; border-radius:4px; cursor:pointer; font-family:inherit; font-size:11px;">CANCEL</button>
+                        <button type="button" id="btn-submit-face-merge" onclick="submitFaceMerge()" style="background:rgba(124,147,255,0.25); border:1px solid #7C93FF; color:#7C93FF; padding:6px 18px; border-radius:4px; cursor:pointer; font-family:inherit; font-size:11px; font-weight:bold;">🔀 MERGE INTO TARGET PROFILE</button>
+                    </div>
+                </div>
+            </div>
+
+            
+    <!-- ══════════════════════════════════════════════════════════
+         TOP HEADER NAVBAR
+         ══════════════════════════════════════════════════════════ -->
+    <header class="faced-navbar">
+        <div class="faced-brand">
+            <div class="faced-logo-icon">
+                <i class="fas fa-fingerprint"></i>
+            </div>
+            <div class="faced-brand-text">
+                <span class="faced-title">FACED <span>// INTELLIGENCE</span></span>
+                <span class="faced-sub">BIOMETRIC RECOGNITION &amp; IDENTITY PLATFORM</span>
+            </div>
+            <div class="faced-engine-status">
+                <span class="status-pulse-dot"></span>
+                <span>RUST SIMD + FAISS READY</span>
+            </div>
+        </div>
+
+        <div class="faced-nav-controls">
+            <div class="faced-tabs">
+                <button type="button" id="face-tab-btn-scan" class="faced-tab-btn active" onclick="switchFacePopupTab('scan')">
+                    <i class="fas fa-crosshairs"></i> 1. BIOMETRIC SCANNER
+                </button>
+                <button type="button" id="face-tab-btn-db" class="faced-tab-btn" onclick="switchFacePopupTab('database')">
+                    <i class="fas fa-database"></i> 2. FACE DATABASE &amp; FAISS (<span id="face-db-count-badge">42</span>)
+                </button>
+            </div>
+
+            <button type="button" class="faced-btn-primary" onclick="triggerFaceUpload()">
+                <i class="fas fa-cloud-upload-alt"></i> UPLOAD NEW PHOTO
+            </button>
+        </div>
+    </header>
+
+    <!-- ══════════════════════════════════════════════════════════
+         MAIN APPLICATION WORKSPACE
+         ══════════════════════════════════════════════════════════ -->
+    <main class="faced-main">
+
+        <!-- VIEW 1: BIOMETRIC SCANNER -->
+        <div id="face-view-scan" style="display:flex; flex-direction:column; flex:1;">
+
+            <!-- STATE A: CENTERED PHOTO UPLOAD HERO DROPZONE -->
+            <div id="face-center-hero-upload">
+                <input type="file" id="face-upload-input" accept="image/*,application/pdf,.pdf" style="display:none;">
+
+                <div class="hero-scanner-frame" id="face-upload-zone" onclick="document.getElementById('face-upload-input').click()">
+                    <div class="bracket top-left"></div>
+                    <div class="bracket top-right"></div>
+                    <div class="bracket bottom-left"></div>
+                    <div class="bracket bottom-right"></div>
+
+                    <div id="face-upload-placeholder">
+                        <div class="scanner-aperture-ring">
+                            <i class="fas fa-user-astronaut"></i>
+                        </div>
+                        <h2 class="hero-title">DROP FACE IMAGE / PDF OR PASTE (CTRL+V)</h2>
+                        <p class="hero-desc">
+                            Extract 128D facial feature embeddings, detect multi-face landmarks, and perform instant vector matching against enrolled biometric identities.
+                        </p>
+
+                        <div class="hero-actions" onclick="event.stopPropagation();">
+                            <button type="button" class="hero-btn-primary" onclick="document.getElementById('face-upload-input').click()">
+                                <i class="fas fa-folder-open"></i> BROWSE FILE
+                            </button>
+                            <button type="button" class="hero-btn-secondary" onclick="pasteImageFromClipboard()">
+                                <i class="fas fa-paste"></i> 📋 PASTE FROM CLIPBOARD
+                            </button>
+                        </div>
+
+                        <div class="hero-specs-row">
+                            <span class="spec-pill"><i class="fas fa-file-image"></i> PNG / JPG / WEBP / PDF</span>
+                            <span class="spec-pill"><i class="fas fa-bolt"></i> RUST RAYON SIMD</span>
+                            <span class="spec-pill"><i class="fas fa-project-diagram"></i> FAISS EXACT 128D</span>
+                            <span class="spec-pill"><i class="fas fa-shield-alt"></i> ZERO-COPY LOCAL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pipeline Architecture Highlights -->
+                <div class="hero-pipeline-ribbon">
+                    <div class="pipe-col">
+                        <span class="pipe-label"><i class="fas fa-eye"></i> DEEP DETECTOR</span>
+                        <span class="pipe-val">OpenCV YuNet ONNX (640x640)</span>
+                    </div>
+                    <div class="pipe-col">
+                        <span class="pipe-label"><i class="fas fa-brain"></i> 128D EMBEDDER</span>
+                        <span class="pipe-val">SFace Deep Feature Network</span>
+                    </div>
+                    <div class="pipe-col">
+                        <span class="pipe-label"><i class="fas fa-tachometer-alt"></i> SIMD ACCELERATOR</span>
+                        <span class="pipe-val">Rust Native C-ABI (Rayon Parallel)</span>
+                    </div>
+                    <div class="pipe-col">
+                        <span class="pipe-label"><i class="fas fa-database"></i> VECTOR STORE</span>
+                        <span class="pipe-val">Facebook Research FAISS (IndexFlatIP)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATE B: RESULTS WORKSPACE (DISPLAYS ONCE PHOTO UPLOADED) -->
+            <div id="face-scan-results-workspace">
+                <!-- Results Action & Status Strip -->
+                <div class="results-top-bar">
+                    <div class="results-status-group">
+                        <button type="button" class="btn-rescan" onclick="clearFaceRecognitionState()">
+                            <i class="fas fa-arrow-left"></i> SEARCH ANOTHER PHOTO
+                        </button>
+                        <div id="face-detection-count-pill" style="color:var(--primary); font-size:12px; font-weight:bold;"></div>
+                        <div id="face-progress-text" style="color:rgba(255,255,255,0.7); font-size:11px;"></div>
+                    </div>
+
+                    <div class="results-actions-group">
+                        <button type="button" id="face-scan-btn" class="btn-action-tool" onclick="runFaceRecognitionScan()">
+                            <i class="fas fa-sync-alt" style="color:var(--primary);"></i> RE-SCAN
+                        </button>
+                        <button type="button" class="btn-action-tool" onclick="exportFaceRecognitionJson()" title="Export JSON Analysis">
+                            <i class="fas fa-download"></i> EXPORT REPORT
+                        </button>
+                        <button type="button" class="btn-action-tool" onclick="clearFaceRecognitionState()" style="color:#FF5555;">
+                            <i class="fas fa-times"></i> CLEAR
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div id="face-progress-shell" style="display:none; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden; height:5px; border:1px solid rgba(0,255,209,0.2);">
+                    <div id="face-progress-fill" style="width:0%; height:100%; background:var(--primary); box-shadow:0 0 8px var(--primary); transition:width .25s ease;"></div>
+                </div>
+
+                <!-- Split Grid: Visuals on Left, Intelligence & Embeddings on Right -->
+                <div class="results-split-grid">
+                    <!-- Left Column: Visual Canvas & Image Metadata -->
+                    <div class="results-left-col">
+                        <!-- Canvas Card -->
+                        <div class="results-card">
+                            <div style="color:var(--text-muted); font-size:10px; letter-spacing:1px; margin-bottom:8px; text-transform:uppercase;">
+                                <i class="fas fa-crosshairs" style="color:var(--primary); margin-right:5px;"></i>BIOMETRIC CANVAS OVERLAY
+                            </div>
+
+                            <div id="face-preview-wrapper" style="position:relative; width:100%; text-align:center; overflow:hidden; border-radius:6px; background:#000; border:1px solid rgba(0,255,209,0.3);">
+                                <img id="face-preview-image" alt="Preview" style="width:100%; height:auto; max-height:360px; object-fit:contain; border-radius:6px; display:inline-block;">
+                                <canvas id="face-preview-canvas" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- EXIF & Technical Metadata -->
+                        <div id="face-exif-panel" class="results-card" style="display:none;">
+                            <div style="color:var(--text-muted); font-size:10px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">
+                                <i class="fas fa-info-circle" style="margin-right:5px; color:var(--primary);"></i>EXIF &amp; Image Metadata
+                            </div>
+                            <div id="face-exif-content" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;"></div>
+                        </div>
+
+                        <!-- Reverse Visual Search Engines -->
+                        <div id="face-greverse-panel" class="results-card" style="display:none;">
+                            <div style="color:var(--text-muted); font-size:10px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">
+                                <i class="fas fa-search-location" style="margin-right:5px; color:var(--primary);"></i>Reverse Visual Search Uplink
+                            </div>
+                            <div id="face-greverse-content" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Detected Faces, 128D Embeddings, Database Matches -->
+                    <div class="results-right-col">
+                        <div class="results-card">
+                            <div style="color:var(--text-muted); font-size:10px; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">
+                                <i class="fas fa-dna" style="color:var(--primary); margin-right:5px;"></i>DETECTED BIOMETRICS &amp; 128D EMBEDDINGS
+                            </div>
+
+                            <div id="face-results-panel" style="display:flex; flex-direction:column; gap:12px;"></div>
+                            <div id="face-no-results" style="color:rgba(255,255,255,0.3); font-size:11px; text-align:center; padding:30px 10px; border:1px dashed rgba(255,255,255,0.08); border-radius:6px;">
+                                <i class="fas fa-user-circle" style="font-size:32px; margin-bottom:8px; opacity:0.4;"></i>
+                                <div>No detected faces yet.</div>
+                            </div>
+                        </div>
+
+                        <!-- FAISS & Rust Vector Matches -->
+                        <div id="face-facenet-panel" class="results-card" style="display:none;">
+                            <div style="color:var(--text-muted); font-size:10px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">
+                                <i class="fas fa-project-diagram" style="margin-right:5px; color:#7C93FF;"></i>FAISS &amp; Rust Vector Database Matches
+                            </div>
+                            <div id="face-facenet-content" style="display:flex; flex-direction:column; gap:8px;"></div>
+                        </div>
+
+                        <!-- Public Web Search Matches -->
+                        <div id="face-search-panel" class="results-card" style="display:none;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                                <div style="color:var(--text-muted); font-size:10px; text-transform:uppercase; letter-spacing:1px;">
+                                    <i class="fas fa-globe" style="margin-right:5px; color:var(--primary);"></i>Public Web Intelligence Matches
+                                </div>
+                                <div id="face-search-count" style="color:var(--primary); font-size:10px; font-weight:bold;"></div>
+                            </div>
+                            <input type="text" id="face-search-filter" placeholder="Filter search results..." oninput="renderFaceSearchResults()"
+                                style="width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:6px 10px; font-size:11px; border-radius:4px; font-family:inherit; margin-bottom:10px;">
+                            <div id="face-search-results" style="display:flex; flex-direction:column; gap:8px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: FACE DATABASE & FAISS ENROLLMENT -->
+<!-- VIEW 2: FACE DATABASE & FAISS ENROLLMENT -->
+                <div id="face-view-database" style="display:none; height:calc(90vh - 54px); overflow-y:auto; padding:18px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <div style="color:#fff; font-size:14px; font-weight:bold;"><i class="fas fa-database" style="color:#00FFD1; margin-right:6px;"></i>FAISS FACE DATABASE MANAGER</div>
+                            <div style="color:rgba(255,255,255,0.5); font-size:11px; margin-top:2px;">Enrolled identities and indexed 128D facial embeddings ready for real-time recognition.</div>
+                        </div>
+                        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                            <input type="text" id="face-db-search-input" placeholder="Search enrolled name or tag..." oninput="filterFaceDatabaseList()"
+                                style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.15); color:#fff; padding:6px 12px; font-size:11px; font-family:inherit; border-radius:4px; width:200px;">
+                            <button type="button" onclick="toggleDbPhotoSearchZone()" id="btn-toggle-db-photo-search"
+                                style="background:rgba(0,255,209,0.15); border:1px solid #00FFD1; color:#00FFD1; padding:6px 12px; cursor:pointer; font-family:inherit; font-size:11px; font-weight:bold; border-radius:4px;">
+                                <i class="fas fa-camera" style="margin-right:4px;"></i>SEARCH BY PHOTO
+                            </button>
+                            <button type="button" onclick="openFaceMergeModal()"
+                                style="background:rgba(124,147,255,0.15); border:1px solid #7C93FF; color:#7C93FF; padding:6px 12px; cursor:pointer; font-family:inherit; font-size:11px; font-weight:bold; border-radius:4px;">
+                                <i class="fas fa-code-branch" style="margin-right:4px;"></i>MERGE PROFILES
+                            </button>
+                            <button type="button" onclick="loadFaceDatabase()"
+                                style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:6px 12px; cursor:pointer; font-family:inherit; font-size:11px; font-weight:bold; border-radius:4px;">
+                                <i class="fas fa-sync-alt" style="margin-right:4px;"></i>REFRESH
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Database Statistics Bar -->
+                    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:16px;">
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:10px;">
+                            <div style="color:rgba(255,255,255,0.4); font-size:10px;">TOTAL ENROLLED FACES</div>
+                            <div id="stat-total-faces" style="color:#00FFD1; font-size:18px; font-weight:bold; margin-top:4px;">0</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:10px;">
+                            <div style="color:rgba(255,255,255,0.4); font-size:10px;">FAISS VECTORS INDEXED</div>
+                            <div id="stat-faiss-vectors" style="color:#7C93FF; font-size:18px; font-weight:bold; margin-top:4px;">0</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:10px;">
+                            <div style="color:rgba(255,255,255,0.4); font-size:10px;">VECTOR DIMENSIONS</div>
+                            <div style="color:#fff; font-size:18px; font-weight:bold; margin-top:4px;">128D</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:10px;">
+                            <div style="color:rgba(255,255,255,0.4); font-size:10px;">ACCELERATOR ENGINE</div>
+                            <div style="color:#00FFD1; font-size:14px; font-weight:bold; margin-top:6px;">Rust + FAISS SIMD</div>
+                        </div>
+                    </div>
+
+                    <!-- BIOMETRIC SEARCH BY PHOTO / PDF DROPZONE -->
+                    <div id="face-db-photo-search-zone" style="display:none; background:rgba(0,255,209,0.04); border:1px dashed #00FFD1; border-radius:6px; padding:14px; margin-bottom:16px;">
+                        <input type="file" id="face-db-search-file-input" accept="image/*,application/pdf,.pdf" style="display:none;" onchange="handleDbPhotoSearchUpload(event)">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <span style="color:#00FFD1; font-weight:bold; font-size:12px;"><i class="fas fa-camera" style="margin-right:6px;"></i>BIOMETRIC SEARCH: UPLOAD PHOTO OR PDF TO MATCH AGAINST DATABASE</span>
+                            <i class="fas fa-times" onclick="toggleDbPhotoSearchZone()" style="color:#aaa; cursor:pointer; font-size:14px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'"></i>
+                        </div>
+                        <div style="color:rgba(255,255,255,0.6); font-size:10px; margin-bottom:10px;">
+                            Upload any portrait photo or PDF document to detect face embeddings and instantly match against enrolled identities in FAISS.
+                        </div>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <button type="button" onclick="document.getElementById('face-db-search-file-input').click()"
+                                style="background:rgba(0,255,209,0.18); border:1px solid #00FFD1; color:#00FFD1; padding:7px 18px; font-family:inherit; font-size:11px; font-weight:bold; border-radius:4px; cursor:pointer;">
+                                <i class="fas fa-folder-open" style="margin-right:6px;"></i>CHOOSE IMAGE OR PDF TO SEARCH
+                            </button>
+                            <span id="face-db-search-filename" style="color:rgba(255,255,255,0.5); font-size:10px;"></span>
+                        </div>
+                        <div id="face-db-search-loading" style="display:none; margin-top:10px; color:#00FFD1; font-size:11px; font-weight:bold;">
+                            <i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Extracting 128D embeddings & searching FAISS index...
+                        </div>
+                        <!-- Container for search results inside database view -->
+                        <div id="face-db-photo-search-matches" style="display:none; margin-top:12px;"></div>
+                    </div>
+
+                    <!-- Enrolled Faces Grid Container -->
+                    <div id="face-db-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px;"></div>
+                    <div id="face-db-empty-msg" style="display:none; text-align:center; padding:60px 20px; color:rgba(255,255,255,0.3); border:1px dashed rgba(255,255,255,0.1); border-radius:8px;">
+                        <i class="fas fa-folder-open" style="font-size:36px; margin-bottom:10px; opacity:0.5;"></i>
+                        <div style="font-size:13px; color:#fff;">No faces enrolled yet.</div>
+                        <div style="font-size:11px; margin-top:4px;">Upload an image in the Scan tab and click "Save to Face Database" to register identities.</div>
+                    </div>
+                
+    </main>
+
+    <!-- ══════════════════════════════════════════════════════════
+         FOOTER
+         ══════════════════════════════════════════════════════════ -->
+    <footer class="faced-footer">
+        <div class="footer-left">
+            <span class="footer-brand">FACED // BIOMETRIC INTELLIGENCE</span>
+            <span class="footer-sep">|</span>
+            <span>OPENCV YUNET + SFACE ONNX PIPELINE</span>
+        </div>
+
+        <div class="footer-center">
+            <span class="footer-chip"><i class="fas fa-bolt" style="color:#00FFD1;"></i> RUST SIMD (RAYON MULTITHREADED)</span>
+            <span class="footer-chip"><i class="fas fa-database" style="color:#7C93FF;"></i> FAISS: 85 VECTORS / 42 IDENTITIES</span>
+            <span class="footer-chip"><i class="fas fa-microchip" style="color:#00FF88;"></i> 128D L2-NORMALIZED</span>
+        </div>
+
+        <div class="footer-right">
+            <span>API: /api/face/*</span>
+            <span class="footer-sep">|</span>
+            <span style="color:#00FFD1;"><i class="fas fa-circle" style="font-size:7px; margin-right:4px;"></i>ONLINE</span>
+        </div>
+    </footer>
+
+    <!-- JS CONTROLLER -->
+    <script src="/static/js/face_intelligence.js"></script>
+    <script>
+        function triggerFaceUpload() {
+            if (typeof switchFacePopupTab === 'function') {
+                switchFacePopupTab('scan');
+            }
+            const input = document.getElementById('face-upload-input');
+            if (input) input.click();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof window.attachFaceRecognitionHandlers === 'function') {
+                window.attachFaceRecognitionHandlers();
+            }
+            if (typeof window.loadFaceDatabase === 'function') {
+                window.loadFaceDatabase();
+            }
+            if (typeof window.updateDatabaseBadge === 'function') {
+                window.updateDatabaseBadge();
+            }
+        });
+    </script>
+</body>
+</html>

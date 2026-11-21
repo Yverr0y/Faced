@@ -1,0 +1,12 @@
+[package]
+name = "faced_rs"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "faced_rs"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+libc = "0.2"
+rayon = "1.10"
