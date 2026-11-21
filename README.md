@@ -27,6 +27,19 @@ A high-performance, standalone biometric face recognition and identity intellige
 > Use this tool only with lawful authorization and consent, and follow your local privacy and biometric data laws (GDPR, CCPA, BIPA, etc.). The author is not responsible for misuse.
 
 
+## 📦 Downloads & Official Releases
+
+Pre-packaged binary distributions for Linux, Windows, and Apple (macOS) are available on the [GitHub Releases](https://github.com/h9zdev/Faced/releases/tag/v1.0.0):
+
+| Operating System | Download Package | Architecture | Format & Details |
+|---|---|---|---|
+| 🐧 **Linux** | [**Faced-v1.0.0-linux-x86_64.tar.gz**](https://github.com/h9zdev/Faced/releases/download/v1.0.0/Faced-v1.0.0-linux-x86_64.tar.gz) | x86_64 / amd64 | `.tar.gz` (includes precompiled native Rust SIMD `libfaced_rs.so`, models, `run.sh`) |
+| 🪟 **Windows** | [**Faced-v1.0.0-windows-x86_64.zip**](https://github.com/h9zdev/Faced/releases/download/v1.0.0/Faced-v1.0.0-windows-x86_64.zip) | x64 | `.zip` (includes precompiled `faced_rs.dll`, models, 1-click `setup.bat` & `run.bat`) |
+| 🍎 **Apple (macOS)** | [**Faced-v1.0.0-macos-universal.tar.gz**](https://github.com/h9zdev/Faced/releases/download/v1.0.0/Faced-v1.0.0-macos-universal.tar.gz) | Universal (Apple Silicon & Intel) | `.tar.gz` (includes native runner `run.sh`, models & Rust acceleration source) |
+
+👉 **All Release Artifacts:** [https://github.com/h9zdev/Faced/releases](https://github.com/h9zdev/Faced/releases)
+
+
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
