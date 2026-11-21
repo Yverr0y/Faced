@@ -1,0 +1,32 @@
+name: "🧠 Neural Model / Algorithm Integration"
+description: "Request or propose a new ONNX face detection, embedding, or OCR model."
+title: "[Model Request]: "
+labels: ["enhancement", "component:neural-models"]
+body:
+  - type: dropdown
+    id: model_type
+    attributes:
+      label: Model Classification
+      options:
+        - "Face Detector (e.g. SCRFD, RetinaFace, MTCNN)"
+        - "Feature Embedder (e.g. SFace, ArcFace, CosFace, MagFace)"
+        - "Anti-Spoofing / Liveness (e.g. MiniFASNet)"
+        - "Document / Text OCR (e.g. RapidOCR, PaddleOCR, Tesseract)"
+        - "Face Attribute / Landmark Net (e.g. 68-point, 106-point)"
+    validations:
+      required: true
+  - type: input
+    id: model_name
+    attributes:
+      label: Model Name & Source
+      description: Name of the paper, model weights, or GitHub repository.
+      placeholder: "e.g., InsightFace Buffalo_L ONNX"
+    validations:
+      required: true
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Performance & Accuracy Trade-Offs
+      description: Explain accuracy improvements (LFW / MegaFace scores), latency, or memory advantages over current models.
+    validations:
+      required: true

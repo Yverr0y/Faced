@@ -1,0 +1,47 @@
+name: "💡 Feature Request"
+description: "Suggest a new idea, neural model integration, or architectural enhancement."
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing ideas to make FACED better!
+  - type: dropdown
+    id: category
+    attributes:
+      label: Enhancement Category
+      description: Which area does this enhancement target?
+      options:
+        - "Neural Face Recognition Models (InsightFace, ArcFace, AdaFace)"
+        - "Hardware Acceleration (CUDA, TensorRT, DirectML, Apple Metal)"
+        - "Vector Indexing (HNSW, IVFPQ, Annoy, Milvus)"
+        - "OSINT & Forensic Analysis Tools"
+        - "UI & Visualization Overlays"
+        - "CLI / Scripting Automation"
+        - "Packaging & Distribution"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Use Case
+      description: Is your feature request related to a specific problem or bottleneck?
+      placeholder: "A clear and concise description of the motivation..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution / Architecture
+      description: Describe your proposed enhancement and how it should work.
+      placeholder: "Detailed implementation idea..."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions Considered
+      description: Any alternative libraries, models, or approaches you have evaluated?
+    validations:
+      required: false

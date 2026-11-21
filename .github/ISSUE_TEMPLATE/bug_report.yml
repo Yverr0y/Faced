@@ -1,0 +1,72 @@
+name: "🐛 Bug Report"
+description: "File an issue for a bug, defect, or unexpected crash in FACED."
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! Please provide as much information as possible to help us reproduce and resolve the problem.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component / Category
+      description: Which area of FACED is affected?
+      options:
+        - "Biometric Ingestion & UI (Canvas, Upload Dropzone, Telemetry)"
+        - "Deep Neural Models (OpenCV YuNet, SFace, RapidOCR)"
+        - "Hardware Acceleration (Rust SIMD, Rayon, libfaced_rs.so, faced_rs.dll)"
+        - "Vector Store & Database (FAISS IndexFlatIP, SQLite WAL)"
+        - "REST API Endpoints (/api/face/*)"
+        - "Cross-Platform Packaging & Release"
+        - "Other"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: Which platform are you running FACED on?
+      options:
+        - "Linux (Ubuntu / Debian / Kali / Arch / Fedora)"
+        - "Windows 10 / 11 (x64)"
+        - "macOS Apple Silicon (M1 / M2 / M3 / M4)"
+        - "macOS Intel (x86_64)"
+        - "Other / Containerized"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment Versions
+      description: Python version, Rust version, or OpenCV version if known.
+      placeholder: "e.g., Python 3.11, Rust 1.82, OpenCV 4.10"
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem Description
+      description: A clear and concise description of what the bug is.
+      placeholder: "Describe what went wrong..."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Exact steps to reproduce the issue.
+      placeholder: |
+        1. Ingest image 'test.jpg'
+        2. Click 'Save to Face Database'
+        3. See error ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Terminal Logs / Traceback
+      description: Copy and paste any relevant terminal output or traceback here.
+      render: shell
+    validations:
+      required: false

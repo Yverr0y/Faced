@@ -1,0 +1,68 @@
+name: "Auto-Categorize and Label Issues"
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  categorize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-Label Issue Categories
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = (issue.body || "").toLowerCase();
+            const title = (issue.title || "").toLowerCase();
+            const text = title + " " + body;
+            const labelsToAdd = new Set();
+
+            // OS Platform categorization
+            if (text.includes("linux") || text.includes("ubuntu") || text.includes("debian") || text.includes("arch") || text.includes(".tar.gz")) {
+              labelsToAdd.add("platform:linux");
+            }
+            if (text.includes("windows") || text.includes("win10") || text.includes("win11") || text.includes(".bat") || text.includes(".dll") || text.includes("setup.bat")) {
+              labelsToAdd.add("platform:windows");
+            }
+            if (text.includes("macos") || text.includes("apple") || text.includes("darwin") || text.includes("m1") || text.includes("m2") || text.includes("m3") || text.includes("m4") || text.includes("silicon")) {
+              labelsToAdd.add("platform:macos");
+            }
+
+            // Component categorization
+            if (text.includes("rust") || text.includes("simd") || text.includes("rayon") || text.includes("libfaced_rs") || text.includes("faced_rs.dll") || text.includes("c-abi")) {
+              labelsToAdd.add("component:rust-simd");
+            }
+            if (text.includes("yunet") || text.includes("sface") || text.includes("onnx") || text.includes("rapidocr") || text.includes("landmark") || text.includes("embedding") || text.includes("model")) {
+              labelsToAdd.add("component:neural-models");
+            }
+            if (text.includes("faiss") || text.includes("sqlite") || text.includes("database") || text.includes("dossier") || text.includes("wal") || text.includes("vector")) {
+              labelsToAdd.add("component:database");
+            }
+            if (text.includes("ui") || text.includes("canvas") || text.includes("overlay") || text.includes("frontend") || text.includes("css") || text.includes("navbar") || text.includes("dropzone")) {
+              labelsToAdd.add("component:ui");
+            }
+            if (text.includes("security") || text.includes("vulnerability") || text.includes("privacy") || text.includes("air-gap") || text.includes("cve")) {
+              labelsToAdd.add("security");
+            }
+
+            // Issue type categorization
+            if (title.startsWith("[bug]") || text.includes("crash") || text.includes("error") || text.includes("exception") || text.includes("traceback")) {
+              labelsToAdd.add("bug");
+            }
+            if (title.startsWith("[feature]") || title.startsWith("[model request]") || text.includes("feature request") || text.includes("enhancement") || text.includes("proposal")) {
+              labelsToAdd.add("enhancement");
+            }
+
+            if (labelsToAdd.size > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: Array.from(labelsToAdd)
+              });
+              console.log(`Successfully applied labels: ${Array.from(labelsToAdd).join(", ")}`);
+            }
