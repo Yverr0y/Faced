@@ -1,0 +1,61 @@
+name: "Multi-Platform CI & Matrix Build"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & Test (${{ matrix.os }} - Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Set up Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.os == 'macos-latest' && 'x86_64-apple-darwin,aarch64-apple-darwin' || '' }}
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build Rust Engine (Linux / Windows)
+        if: matrix.os != 'macos-latest'
+        working-directory: rust_engine
+        run: cargo build --release
+
+      - name: Build Universal Rust Engine (macOS)
+        if: matrix.os == 'macos-latest'
+        working-directory: rust_engine
+        run: |
+          cargo build --release --target x86_64-apple-darwin
+          cargo build --release --target aarch64-apple-darwin
+          mkdir -p ../modules
+          lipo -create \
+            target/x86_64-apple-darwin/release/libfaced_rs.dylib \
+            target/aarch64-apple-darwin/release/libfaced_rs.dylib \
+            -output ../modules/libfaced_rs.dylib
+          echo "Universal macOS dynamic library created at modules/libfaced_rs.dylib"
+
+      - name: Run Basic Health & Import Tests
+        run: |
+          python -c "import cv2; import numpy; import PIL; print('Core dependencies imported successfully')"
+          python -c "import os; print('Models present:', os.path.exists('data/face_models/face_detection_yunet_2023mar.onnx'), os.path.exists('data/face_models/face_recognition_sface_2021dec.onnx'))"
