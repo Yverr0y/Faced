@@ -1,0 +1,42 @@
+# PolyForm Noncommercial License 1.0.0
+
+**Copyright (c) 2026 h9zdev (H9)**
+**Project: FACED — Face Recognition & Identity Intelligence Platform**
+
+https://polyformproject.org/licenses/noncommercial/1.0.0
+
+---
+
+## 1. Purpose & Grant of Rights
+
+The Licensor grants you a copyright license to the software to do everything you might do with the software that would otherwise infringe the Licensor's copyright in it, for any **Noncommercial Purpose**.
+
+## 2. Notices
+
+You must ensure that everyone who gets a copy of any part of this software from you, with or without changes, also gets the text of this license or a link to `https://polyformproject.org/licenses/noncommercial/1.0.0`, along with the copyright notice above.
+
+## 3. Commercial Use Prohibition
+
+You may **not** use, copy, modify, distribute, or incorporate this software, in whole or in part, for any commercial purpose, including but not limited to:
+- Incorporating into a commercial product, platform, appliance, or service.
+- Running as a paid Software-as-a-Service (SaaS), API service, or biometric tracking solution.
+- Using in internal revenue-generating commercial operations or enterprise surveillance for profit.
+- Selling, sublicensing, or distributing the software for monetary consideration.
+
+*Commercial licensing inquiries must be directed to the repository maintainer via official GitHub channels.*
+
+## 4. Definition of Noncommercial Purpose
+
+A **Noncommercial Purpose** is any purpose not primarily intended for or directed towards commercial advantage or monetary compensation, including:
+- Personal experimentation, self-hosting, and hobbyist projects.
+- Academic, scientific, and educational research.
+- Non-profit evaluation, security auditing, and forensic study.
+- Contribution to and validation of open non-commercial software tooling.
+
+## 5. Fair Use & Privacy Compliance
+
+You agree to comply with all applicable local, national, and international laws, regulations, and biometric privacy ordinances (such as GDPR, CCPA, BIPA) when deploying or testing this software. The Licensor does not authorize the use of this software for unlawful surveillance, harassment, or violation of individual rights.
+
+## 6. No Warranty
+
+**THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.**

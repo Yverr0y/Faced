@@ -68,13 +68,19 @@ Once started, navigate in your web browser to:
 ![FACED Analysis](https://raw.githubusercontent.com/h9zdev/Faced/main/img/faced%20two.png)
 
 
-## 📜 License
+## 📜 License & Governance
 
-This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the **Non-Commercial License (PolyForm Noncommercial 1.0.0 / CC BY-NC 4.0)**. See the [LICENSE](LICENSE) ([LICENSE.md](LICENSE.md)) file for full legal terms.
 
-**Unauthorized use is strictly prohibited.**
+> **⚠️ Commercial Use Notice:**
+> Any commercial use, embedding into proprietary revenue-generating products, commercial SaaS platforms, or paid biometric services without explicit written permission from the author is **strictly prohibited**.
 
-📧 Contact: singularat@protn.me
+* 📄 **License Terms**: [LICENSE](LICENSE) | [LICENSE.md](LICENSE.md)
+* 🛡️ **Security Policy**: [SECURITY.md](SECURITY.md)
+* 🤝 **Contributing Guidelines**: [CONTRIBUTING.md](CONTRIBUTING.md)
+* 📜 **Code of Conduct**: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
+📧 Inquiries: `singularat@protn.me`
 
 
 ## ☕ Support
