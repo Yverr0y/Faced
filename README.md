@@ -4,7 +4,7 @@
 </p>
 
 > [!NOTE]
-> **FACED** — sFace Recognition & Identity Intelligence Platform.
+> **FACED** — Face Recognition & Identity Intelligence Platform.
 
 
 A high-performance, standalone biometric face recognition and identity intelligence platform. Features deep neural network face detection, 128D facial feature embedding extraction, Facebook Research FAISS vector indexing, native multi-threaded Rust SIMD acceleration, document OCR parsing, and tactical cyberpunk-grade analytics.
